@@ -26,25 +26,13 @@ function canParseHTMLNatively () {
 
 function createHTMLParser () {
   var Parser = function () {}
-
   if (process.browser) {
-    if (shouldUseActiveX()) {
-      Parser.prototype.parseFromString = function (string) {
-        var doc = new window.ActiveXObject('htmlfile')
-        doc.designMode = 'on' // disable on-page scripts
-        doc.open()
-        doc.write(string)
-        doc.close()
-        return doc
-      }
-    } else {
-      Parser.prototype.parseFromString = function (string) {
-        var doc = document.implementation.createHTMLDocument('')
-        doc.open()
-        doc.write(string)
-        doc.close()
-        return doc
-      }
+    Parser.prototype.parseFromString = function (string) {
+      var doc = document.implementation.createHTMLDocument('')
+      doc.open()
+      doc.write(string)
+      doc.close()
+      return doc
     }
   } else {
     var domino = require('domino')
@@ -53,16 +41,6 @@ function createHTMLParser () {
     }
   }
   return Parser
-}
-
-function shouldUseActiveX () {
-  var useActiveX = false
-  try {
-    document.implementation.createHTMLDocument('').open()
-  } catch (e) {
-    if (window.ActiveXObject) useActiveX = true
-  }
-  return useActiveX
 }
 
 export default canParseHTMLNatively() ? root.DOMParser : createHTMLParser()
