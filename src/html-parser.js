@@ -1,8 +1,4 @@
-/*
- * Set up window for Node.js
- */
-
-var root = (typeof window !== 'undefined' ? window : {})
+import { JSDOM } from "jsdom"
 
 /*
  * Parsing HTML strings
@@ -11,11 +7,8 @@ var root = (typeof window !== 'undefined' ? window : {})
 function createHTMLParser () {
   var Parser = function () {}
   Parser.prototype.parseFromString = function (string) {
-    var doc = document.implementation.createHTMLDocument('')
-    doc.open()
-    doc.write(string)
-    doc.close()
-    return doc
+    const dom = new JSDOM(string)
+    return dom.window.document;
   }
   return Parser
 }
