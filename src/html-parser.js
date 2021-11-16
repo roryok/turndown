@@ -7,7 +7,7 @@ const jsdom = require("jsdom");
 function createHTMLParser () {
   var Parser = function () {}
   Parser.prototype.parseFromString = function (string) {
-    const dom = new JSDOM(string)
+    const dom = new jsdom(string)
     return dom.window.document;
   }
   return Parser
