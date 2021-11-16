@@ -1,4 +1,4 @@
-import { JSDOM } from "jsdom"
+const jsdom = require("jsdom");
 
 /*
  * Parsing HTML strings
